@@ -12,6 +12,12 @@
     <div id="addQuoteForm"></div>
     <button id="exportJson">Export to JSON</button>
     <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
+    <select id="categoryFilter" onchange="filterQuotes()">
+        <option value="all">All Categories</option>
+        <option value="Motivational">Motivational</option>
+        <option value="Funny">Funny</option>
+        <option value="Inspirational">Inspirational</option>
+    </select>
     <script src="script.js"></script>
 </body>
 </html>

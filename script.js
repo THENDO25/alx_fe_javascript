@@ -1,12 +1,12 @@
 let quotes = [
-    //motivation
+    // Motivation
     { text: "Do hard things.", category: "Motivation" },
     { text: "You are never too old to set another goal or to dream a new dream.", category: "Motivation" },
     { text: "You don't have to be great to start, but you have to start to be great.", category: "Motivation" },
-    //inspirational
+    // Inspirational
     { text: "The only way to do great work is to love what you do.", category: "Inspiration" },
     { text: "Life is 10% what happens to you and 90% how you react to it.", category: "Inspiration" },
-    //funny
+    // Funny
     { text: "What is the computer's favorite snack to eat?... Microchips.", category: "Funny" },
 ];
 
@@ -31,11 +31,16 @@ function createAddQuoteForm() {
 function addQuote() {
     const newQuoteText = document.getElementById("newQuoteText").value;
     const newQuoteCategory = document.getElementById("newQuoteCategory").value;
-    quotes.push({ text: newQuoteText, category: newQuoteCategory });
-    showRandomQuote();
+
+    if (newQuoteText && newQuoteCategory) {
+        quotes.push({ text: newQuoteText, category: newQuoteCategory });
+        saveQuotes();
+        updateCategoryFilter();
+        showRandomQuote();
+    }
+
     document.getElementById("newQuoteText").value = "";
     document.getElementById("newQuoteCategory").value = "";
-    saveQuotes();
 }
 
 function saveQuotes() {
@@ -63,17 +68,59 @@ function importFromJsonFile(event) {
     const fileReader = new FileReader();
     fileReader.onload = function(event) {
         const importedQuotes = JSON.parse(event.target.result);
-        quotes.push(...importedQuotes);
+        quotes = [...quotes, ...importedQuotes];
         saveQuotes();
+        updateCategoryFilter();
         alert('Quotes imported successfully!');
     };
     fileReader.readAsText(event.target.files[0]);
 }
 
+function populateCategories() {
+    const categories = [...new Set(quotes.map(quote => quote.category))];
+    const categoryFilter = document.getElementById("categoryFilter");
+    categoryFilter.innerHTML = '<option value="all">All</option>'; // Add "All" option
+
+    categories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category;
+        option.text = category;
+        categoryFilter.appendChild(option);
+    });
+}
+
+function filterQuotes() {
+    const selectedCategory = document.getElementById("categoryFilter").value;
+    let filteredQuotes = selectedCategory === "all" ? quotes : quotes.filter(quote => quote.category === selectedCategory);
+    showRandomQuote(filteredQuotes);
+}
+
+function saveFilter() {
+    localStorage.setItem("categoryFilter", document.getElementById("categoryFilter").value);
+}
+
+function loadFilter() {
+    const savedFilter = localStorage.getItem("categoryFilter");
+    if (savedFilter) {
+        document.getElementById("categoryFilter").value = savedFilter;
+        filterQuotes();
+    }
+}
+
+function updateCategoryFilter() {
+    populateCategories();
+    saveFilter();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     loadQuotes();
-    showRandomQuote();
+    loadFilter();
     createAddQuoteForm();
+    populateCategories();
+    showRandomQuote();
+
     document.getElementById("newQuote").addEventListener("click", showRandomQuote);
     document.getElementById("exportJson").addEventListener("click", exportToJson);
+    document.getElementById("categoryFilter").addEventListener("change", filterQuotes);
+    document.getElementById("importJson").addEventListener("change", importFromJsonFile);
 });
