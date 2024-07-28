@@ -154,9 +154,14 @@ function populateCategories() {
 
 function filterQuotes() {
     const selectedCategory = document.getElementById("categoryFilter").value;
-    let filteredQuotes = selectedCategory === "all" ? quotes : quotes.filter(quote => quote.category === selectedCategory);
+    let filteredQuotes = quotes;
+  
+    if (selectedCategory !== "all") {
+      filteredQuotes = quotes.filter(quote => quote.category === selectedCategory);
+    }
+
     showRandomQuote(filteredQuotes);
-}
+  }
 
 function saveFilter() {
     localStorage.setItem("categoryFilter", document.getElementById("categoryFilter").value);
