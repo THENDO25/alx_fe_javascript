@@ -56,8 +56,7 @@ async function syncLocalQuotes(serverQuotes) {
     });
 
     saveQuotes();
-    showNotification("Quotes synced with server.");
-}
+    alert("Quotes synced with server!");
 
 function showNotification(message) {
     const notification = document.createElement("div");
