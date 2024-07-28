@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote App</title>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="quoteDisplay"></div>
+    <div id="addQuoteForm"></div>
+    <select id="categoryFilter"></select>
+    <button id="newQuote">Show Random Quote</button>
+    <button id="exportJson">Export Quotes</button>
+    <input type="file" id="importJson" style="display:none;" />
+    <button id="importButton">Import Quotes</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
