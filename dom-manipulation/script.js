@@ -7,7 +7,7 @@ let quotes = [
     { text: "What is the computer's favorite snack to eat?... Microchips.", category: "Funny", id: 6 }
 ];
 
-const API_BASE_URL = "https://jsonplaceholder.typicode.com";
+const API_BASE_URL = "https://jsonplaceholder.typicode.com/posts";
 
 async function fetchQuotesFromServer() {
     try {
