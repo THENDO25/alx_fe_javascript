@@ -9,6 +9,13 @@ let quotes = [
 
 const API_BASE_URL = "https://jsonplaceholder.typicode.com/posts";
 
+const quoteApp = (() => {
+  async function syncQuotes(serverQuotes) {
+    // function implementation
+  }
+  return { syncQuotes };
+})();
+
 async function fetchQuotesFromServer() {
     try {
         const response = await fetch(`${API_BASE_URL}/posts`);
